@@ -47,15 +47,15 @@ class WorkflowApplicable extends DataExtension {
 
 		$tab = $fields->fieldByName('Root') ? $fields->findOrMakeTab('Root.Workflow') : $fields;
 
+		
 		if(Permission::check('APPLY_WORKFLOW')) {
-			$config = new GridFieldConfig();
-			$config->addComponent(new GridFieldToolbarHeader());
-			$config->addComponent(new GridFieldButtonRow('before'));
-			$config->addComponent(new GridFieldAddExistingAutocompleter('buttons-before-left'));
-			$config->addComponent(new GridFieldDataColumns());
-			$config->addComponent(new GridFieldDeleteAction(true));
-			$definition = new GridField('WorkflowDefinitions', 'Workflows', $this->owner->WorkflowDefinitions(), $config);
-			$tab->push($definition);
+			$workflows = new CheckboxSetField(
+				$name = "WorkflowDefinitions",
+				$title = "Active workflows",
+				$source = WorkflowDefinition::get()->map('ID', 'Title'),
+				$value = $this->owner->WorkflowDefinitions()
+			);
+			$tab->push($workflows);
 		}
 
 		$tab->push(new ReadonlyField(
