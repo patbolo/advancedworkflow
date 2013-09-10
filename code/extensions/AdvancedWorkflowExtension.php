@@ -8,7 +8,12 @@
  * @package advancedworkflow
  */
 class AdvancedWorkflowExtension extends LeftAndMainExtension {
-
+	
+	public static $allowed_actions = array(
+		'startworkflow',
+		'updateworkflow'
+	);
+	
 	/**
 	 * Start a workflow
 	 * 
