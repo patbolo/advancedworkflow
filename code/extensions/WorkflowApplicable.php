@@ -241,7 +241,8 @@ class WorkflowApplicable extends DataExtension {
 
 		// otherwise, see if there's any workflows applied. If there are, then we shouldn't be able
 		// to directly publish
-		if($effective = $this->workflowService->getDefinitionsFor($this->owner)) {
+		$effective = $this->workflowService->getDefinitionsFor($this->owner);
+		if($effective instanceof SS_List && $effective->Count()) {
 			return false;
 		}
 		return true;
